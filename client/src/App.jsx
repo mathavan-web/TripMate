@@ -12,6 +12,10 @@ import CustomersPage from './pages/CustomersPage';
 import EnquiriesPage from './pages/EnquiriesPage';
 import PackagesPage from './pages/PackagesPage';
 import QuotationsPage from './pages/QuotationsPage';
+import BookingsPage from './pages/BookingsPage';
+import TripsPage from './pages/TripsPage';
+import PaymentsPage from './pages/PaymentsPage';
+import ExpensesPage from './pages/ExpensesPage';
 
 function ProtectedRoute({ children }) {
   return children;
@@ -36,6 +40,10 @@ function AppRoutes() {
         <Route path="/enquiries" element={<EnquiriesPage />} />
         <Route path="/packages" element={<PackagesPage />} />
         <Route path="/quotations" element={<QuotationsPage />} />
+        <Route path="/bookings" element={<BookingsPage />} />
+        <Route path="/trips" element={<TripsPage />} />
+        <Route path="/payments" element={<PaymentsPage />} />
+        <Route path="/expenses" element={<ExpensesPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/business-profile" element={<BusinessProfilePage />} />
         <Route path="/settings" element={<SettingsPage />} />

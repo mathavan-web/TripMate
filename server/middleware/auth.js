@@ -1,22 +1,25 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const { errorResponse } = require('../utils/apiResponse');
 
 const createDeveloperUser = async () => {
   const developerEmail = 'developer@tripmate.local';
+  const developerPassword = await bcrypt.hash('Developer123!', 10);
 
-  let developer = await User.findOne({ email: developerEmail });
-  if (!developer) {
-    developer = await User.create({
-      name: 'Developer',
-      email: developerEmail,
-      phone: '0000000000',
-      password: 'Developer123!',
-      role: 'Admin',
-    });
-  }
-
-  return developer;
+  return User.findOneAndUpdate(
+    { email: developerEmail },
+    {
+      $setOnInsert: {
+        name: 'Developer',
+        email: developerEmail,
+        phone: '0000000000',
+        password: developerPassword,
+        role: 'Admin',
+      },
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
 };
 
 const protect = async (req, res, next) => {

@@ -24,6 +24,11 @@ app.use('/api/customers', require('./routes/customerRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/packages', require('./routes/packageRoutes'));
 app.use('/api/quotations', require('./routes/quotationRoutes'));
+app.use('/api/bookings', require('./routes/bookingRoutes'));
+app.use('/api/trips', require('./routes/tripRoutes'));
+app.use('/api/payments', require('./routes/paymentRoutes'));
+app.use('/api/expenses', require('./routes/expenseRoutes'));
+app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 
 app.use((req, res) => {
   return errorResponse(res, 404, 'Route not found');
