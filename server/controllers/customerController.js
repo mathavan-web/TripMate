@@ -44,7 +44,7 @@ const getCustomers = async (req, res) => {
 
 const createCustomer = async (req, res) => {
   try {
-    const { name, phone, whatsapp, email, address, city, state, pinCode, notes } = req.body;
+    const { name, phone, whatsapp, whatsappOptIn, email, address, city, state, pinCode, notes } = req.body;
 
     if (!name || !phone) {
       return errorResponse(res, 400, 'Customer name and phone number are required');
@@ -66,6 +66,7 @@ const createCustomer = async (req, res) => {
       name: name.trim(),
       phone: phone.trim(),
       whatsapp: whatsapp ? whatsapp.trim() : '',
+      whatsappOptIn: whatsappOptIn === true,
       email: email ? email.trim().toLowerCase() : '',
       address: address ? address.trim() : '',
       city: city ? city.trim() : '',
@@ -98,7 +99,7 @@ const getCustomerById = async (req, res) => {
 
 const updateCustomer = async (req, res) => {
   try {
-    const { name, phone, whatsapp, email, address, city, state, pinCode, notes } = req.body;
+    const { name, phone, whatsapp, whatsappOptIn, email, address, city, state, pinCode, notes } = req.body;
 
     if (!name || !phone) {
       return errorResponse(res, 400, 'Customer name and phone number are required');
@@ -125,6 +126,7 @@ const updateCustomer = async (req, res) => {
     customer.name = name.trim();
     customer.phone = phone.trim();
     customer.whatsapp = whatsapp ? whatsapp.trim() : '';
+    customer.whatsappOptIn = whatsappOptIn === true;
     customer.email = email ? email.trim().toLowerCase() : '';
     customer.address = address ? address.trim() : '';
     customer.city = city ? city.trim() : '';

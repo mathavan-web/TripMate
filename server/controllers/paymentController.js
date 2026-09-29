@@ -5,6 +5,15 @@ const Customer = require('../models/Customer');
 const Trip = require('../models/Trip');
 const { successResponse, errorResponse } = require('../utils/apiResponse');
 const { getBookingFinancials } = require('../utils/financials');
+const { refreshInvoicePayments } = require('../utils/invoiceService');
+
+const refreshInvoicePaymentStatus = async (bookingId, createdBy) => {
+  try {
+    await refreshInvoicePayments(bookingId, createdBy);
+  } catch (error) {
+    console.error('Invoice payment status refresh failed');
+  }
+};
 
 const paymentMethods = ['Cash', 'UPI', 'Bank Transfer', 'Card', 'Other'];
 const paymentTypes = ['Advance', 'Partial Payment', 'Final Payment', 'Refund'];
@@ -122,6 +131,7 @@ const createPayment = async (req, res) => {
       createdBy: req.user._id,
     });
 
+    await refreshInvoicePaymentStatus(relations.booking._id, req.user._id);
     return successResponse(res, 201, 'Payment created successfully', await populatePayment(Payment.findById(payment._id)));
   } catch (error) {
     return errorResponse(res, 500, 'Failed to create payment');
@@ -145,6 +155,7 @@ const updatePayment = async (req, res) => {
     const payment = await Payment.findOne({ _id: req.params.id, createdBy: req.user._id });
     if (!payment) return errorResponse(res, 404, 'Payment not found');
 
+    const previousBookingId = payment.booking;
     const body = { ...payment.toObject(), ...req.body, booking: req.body.booking || payment.booking };
     const validationError = validatePaymentFields(body);
     if (validationError) return errorResponse(res, 400, validationError);
@@ -167,6 +178,10 @@ const updatePayment = async (req, res) => {
     payment.notes = body.notes || '';
     await payment.save();
 
+    await refreshInvoicePaymentStatus(previousBookingId, req.user._id);
+    if (String(previousBookingId) !== String(relations.booking._id)) {
+      await refreshInvoicePaymentStatus(relations.booking._id, req.user._id);
+    }
     return successResponse(res, 200, 'Payment updated successfully', await populatePayment(Payment.findById(payment._id)));
   } catch (error) {
     return errorResponse(res, 500, 'Failed to update payment');
@@ -178,7 +193,9 @@ const deletePayment = async (req, res) => {
     if (!isValidId(req.params.id)) return errorResponse(res, 400, 'Payment ID is invalid');
     const payment = await Payment.findOne({ _id: req.params.id, createdBy: req.user._id });
     if (!payment) return errorResponse(res, 404, 'Payment not found');
+    const bookingId = payment.booking;
     await payment.deleteOne();
+    await refreshInvoicePaymentStatus(bookingId, req.user._id);
     return successResponse(res, 200, 'Payment deleted successfully');
   } catch (error) {
     return errorResponse(res, 500, 'Failed to delete payment');

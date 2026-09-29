@@ -5,6 +5,37 @@ const Payment = require('../models/Payment');
 const Expense = require('../models/Expense');
 const { successResponse, errorResponse } = require('../utils/apiResponse');
 const { getTripFinancials } = require('../utils/financials');
+const { createInvoiceForCompletedTrip, InvoicePrerequisiteError } = require('../utils/invoiceService');
+const { generatePdf, sendWhatsApp } = require('./invoiceController');
+const { isWhatsAppConfigured } = require('../utils/whatsappDelivery');
+
+const tripStatusTransitions = {
+  Scheduled: ['Started', 'Cancelled'],
+  Started: ['Completed', 'Cancelled'],
+  Completed: [],
+  Cancelled: [],
+};
+
+const completeTripAndCreateInvoice = async (trip, previousStatus, createdBy) => {
+  if (previousStatus !== 'Started' && previousStatus !== 'Completed') {
+    throw new InvoicePrerequisiteError('Start the trip before marking it completed');
+  }
+  await trip.save();
+  let result;
+  try {
+    result = await createInvoiceForCompletedTrip(trip._id, createdBy);
+  } catch (error) {
+    if (previousStatus !== 'Completed') {
+      trip.status = previousStatus;
+      await trip.save().catch(() => {});
+    }
+    throw error;
+  }
+
+  await generatePdf(result.invoice);
+  if (result.created && isWhatsAppConfigured()) await sendWhatsApp(result.invoice);
+  return result.invoice;
+};
 
 const getTrips = async (req, res) => {
   try {
@@ -83,6 +114,9 @@ const createTrip = async (req, res) => {
 
     if (bookingDoc.status !== 'Confirmed') {
       return errorResponse(res, 400, 'Trips can only be created for confirmed bookings');
+    }
+    if (status && status !== 'Scheduled') {
+      return errorResponse(res, 400, 'New trips must start in Scheduled status');
     }
 
     const customerId = customer || bookingDoc.customer;
@@ -200,6 +234,10 @@ const updateTrip = async (req, res) => {
     if (!trip) {
       return errorResponse(res, 404, 'Trip not found');
     }
+    const previousStatus = trip.status;
+    if (req.body.status && req.body.status !== previousStatus && !tripStatusTransitions[previousStatus]?.includes(req.body.status)) {
+      return errorResponse(res, 400, 'Trip status transition is not allowed');
+    }
 
     const allowedFields = [
       'customer', 'travelDate', 'returnDate', 'pickupLocation', 'dropLocation', 'destination',
@@ -221,13 +259,23 @@ const updateTrip = async (req, res) => {
       return errorResponse(res, 400, 'Passenger count must be at least 1');
     }
 
-    await trip.save();
+    let invoice = null;
+    if (trip.status === 'Completed' && req.body.status === 'Completed') {
+      try {
+        invoice = await completeTripAndCreateInvoice(trip, previousStatus, req.user._id);
+      } catch (error) {
+        if (error instanceof InvoicePrerequisiteError) return errorResponse(res, 400, error.message);
+        return errorResponse(res, 500, 'Trip completion invoice could not be created');
+      }
+    } else {
+      await trip.save();
+    }
 
     const populated = await Trip.findById(trip._id)
       .populate('booking', 'bookingNumber status')
       .populate('customer', 'name phone email');
 
-    return successResponse(res, 200, 'Trip updated successfully', populated);
+    return successResponse(res, 200, 'Trip updated successfully', invoice ? { trip: populated, invoice } : populated);
   } catch (error) {
     return errorResponse(res, 500, 'Failed to update trip');
   }
@@ -245,10 +293,29 @@ const updateTripStatus = async (req, res) => {
       return errorResponse(res, 400, 'Trip status is required');
     }
 
-    trip.status = status;
-    await trip.save();
+    if (!['Scheduled', 'Started', 'Completed', 'Cancelled'].includes(status)) {
+      return errorResponse(res, 400, 'Trip status is invalid');
+    }
+    if (status !== trip.status && !tripStatusTransitions[trip.status]?.includes(status)) {
+      return errorResponse(res, 400, 'Trip status transition is not allowed');
+    }
 
-    return successResponse(res, 200, 'Trip status updated successfully', trip);
+    let invoice = null;
+    if (status === 'Completed') {
+      const previousStatus = trip.status;
+      trip.status = status;
+      try {
+        invoice = await completeTripAndCreateInvoice(trip, previousStatus, req.user._id);
+      } catch (error) {
+        if (error instanceof InvoicePrerequisiteError) return errorResponse(res, 400, error.message);
+        return errorResponse(res, 500, 'Trip completion invoice could not be created');
+      }
+    } else {
+      trip.status = status;
+      await trip.save();
+    }
+
+    return successResponse(res, 200, 'Trip status updated successfully', invoice ? { trip, invoice } : trip);
   } catch (error) {
     return errorResponse(res, 500, 'Failed to update trip status');
   }

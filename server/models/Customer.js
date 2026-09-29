@@ -17,6 +17,10 @@ const customerSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    whatsappOptIn: {
+      type: Boolean,
+      default: false,
+    },
     email: {
       type: String,
       trim: true,

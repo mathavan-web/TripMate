@@ -8,7 +8,10 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({
+  limit: '1mb',
+  verify: (req, res, buffer) => { req.rawBody = buffer; },
+}));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/api/health', (req, res) => {
@@ -29,6 +32,9 @@ app.use('/api/trips', require('./routes/tripRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/expenses', require('./routes/expenseRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
+app.use('/api/public', require('./routes/publicInvoiceRoutes'));
+app.use('/api/invoices', require('./routes/invoiceRoutes'));
+app.use('/api/reviews', require('./routes/reviewRoutes'));
 
 app.use((req, res) => {
   return errorResponse(res, 404, 'Route not found');
