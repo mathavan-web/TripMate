@@ -11,6 +11,8 @@ const navItems = [
   { label: 'Trips', path: '/trips' },
   { label: 'Payments', path: '/payments' },
   { label: 'Expenses', path: '/expenses' },
+  { label: 'Invoices', path: '/invoices' },
+  { label: 'Reviews', path: '/reviews' },
   { label: 'Business', path: '/business-profile' },
   { label: 'Profile', path: '/profile' },
   { label: 'Settings', path: '/settings' },

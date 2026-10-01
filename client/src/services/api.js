@@ -26,4 +26,16 @@ const request = async (endpoint, options = {}) => {
   return data;
 };
 
+export const requestFile = async (endpoint) => {
+  const token = localStorage.getItem('tripmate_token');
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.message || 'File request failed');
+  }
+  return response.blob();
+};
+
 export default request;

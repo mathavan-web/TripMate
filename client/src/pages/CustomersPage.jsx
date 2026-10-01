@@ -5,6 +5,7 @@ const emptyForm = {
   name: '',
   phone: '',
   whatsapp: '',
+  whatsappOptIn: false,
   email: '',
   address: '',
   city: '',
@@ -90,6 +91,7 @@ function CustomersPage() {
       name: customer.name || '',
       phone: customer.phone || '',
       whatsapp: customer.whatsapp || '',
+      whatsappOptIn: customer.whatsappOptIn === true,
       email: customer.email || '',
       address: customer.address || '',
       city: customer.city || '',
@@ -154,6 +156,11 @@ function CustomersPage() {
           <label>
             WhatsApp
             <input name="whatsapp" value={form.whatsapp} onChange={handleChange} placeholder="WhatsApp number" />
+          </label>
+
+          <label className="checkbox-label">
+            <input type="checkbox" name="whatsappOptIn" checked={form.whatsappOptIn} onChange={(event) => setForm((previous) => ({ ...previous, whatsappOptIn: event.target.checked }))} />
+            Customer agreed to receive invoices on WhatsApp
           </label>
 
           <label>

@@ -1,380 +1,670 @@
 # 🚕 TripMate
 
-> A MERN-based business management platform for taxi drivers, tour operators, jeep safari operators, vehicle owners, and small travel businesses.
-**Status:** 🚧 Active Development
+> **A simple business management platform for local taxi drivers, jeep safari operators, and small tour businesses.**
 
-TripMate manages the travel-business workflow from customer enquiry to quotation, booking, trip execution, payments, expenses, and profit tracking.
+TripMate is a full-stack **MERN** web application designed to help small travel and transportation businesses manage their complete customer and trip workflow from one place.
 
-## 📌 Project Status
-PhaseModuleStatusPhase 1Foundation & Authentication✅ CompletedPhase 2Customer & Enquiry Management✅ CompletedPhase 3Package & Quotation Management✅ CompletedPhase 4Booking & Trip Management✅ CompletedPhase 5Expenses, Payments & Profit✅ CompletedPhase 6Invoices & Reviews🚧 UpcomingPhase 7Reports, Analytics & Final Polish🚧 Upcoming
+Instead of using separate notebooks, spreadsheets, messaging apps, and payment records, TripMate brings the essential operations into a single system.
 
-## ✨ Implemented Features
+---
 
-### 🔐 Phase 1 — Foundation & Authentication
+## 📌 Project Overview
 
-- User registration and login
-- JWT authentication and protected routes
-- Password hashing
-- Role foundation: Driver, Vehicle Owner, Admin
-- User and business profiles
-- Settings
-- Responsive application layout
-- REST API and MongoDB integration
-- Dashboard foundation
-- API health check
+Small local tour and taxi operators often manage their business manually. Customer enquiries, quotations, bookings, trips, expenses, payments, invoices, and reviews can become difficult to track as the number of customers increases.
 
-### 👥 Phase 2 — Customer & Enquiry Management
-**Customer Management**
+TripMate provides a centralized solution for managing this workflow:
 
-- Create, view, search, edit, archive/delete customers
-- Customer details and ownership protection
-**Enquiry Management**
-
-- Customer-linked enquiries
-- Travel and return dates
-- Pickup, drop and destination
-- Passenger count and vehicle preference
-- Travel type and special requirements
-- Estimated amount
-- Status management, search and filtering
-
-### 📦 Phase 3 — Package & Quotation Management
-**Package Management**
-
-- Tour packages
-- Local sightseeing
-- Jeep safari
-- Airport transfer
-- Outstation
-- One-way and round-trip packages
-- Custom packages
-- Pricing, destinations, inclusions and exclusions
-- Activate/deactivate packages
-**Quotation Management**
-
-- Create quotations from enquiries
-- Package/customer/enquiry integration
-- Line items, subtotal, discount, tax and total
-- Advance and balance
-- Automatic quotation numbering
-- Draft, Sent, Accepted, Rejected, Expired and Cancelled statuses
-- Validity, terms and pricing snapshot
-- Preview/PDF support
-
-### 🚕 Phase 4 — Booking & Trip Management
-**Booking Management**
-
-- Accepted quotation → booking workflow
-- Customer, enquiry, quotation and package relationships
-- Travel details and passenger count
-- Vehicle information
-- Pricing snapshot
-- Advance and balance handling
-- Booking status management
-- Search/filtering
-- Ownership protection
-**Trip Management**
-
-- Create trips from confirmed bookings
-- Booking → Trip relationship
-- Driver and vehicle information
-- Travel details
-- Trip status management
-- Duplicate-trip prevention
-- Search/filtering
-**Business Rule:** A trip can only be created from a confirmed booking.
-
-### 💰 Phase 5 — Expenses, Payments & Profit
-**Payment Management**
-
-- Payment CRUD
-- Booking/trip relationships
-- Payment numbering
-- Advance, partial and final payments
-- Refund handling
-- Cash, UPI, bank transfer, card and other methods
-- Search/filtering
-- Payment validation
-- Overpayment prevention
-**Expense Management**
-
-- Expense CRUD
-- Trip/booking relationships
-- Expense numbering
-- Categories including Fuel, Toll, Parking, Food, Driver Allowance, Accommodation, Maintenance, Permit and Other
-- Search/filtering
-- Amount/date/payment-method validation
-**Financial Management**
-
-- Total revenue
-- Payments received
-- Pending balance
-- Total trip expenses
-- Trip profit
-- Trip financial summary
-- Dashboard financial metrics
-
-### 🚧 Phase 6 — Invoices & Reviews
-Planned:
-
-- Invoice management
-- Invoice numbering and generation
-- Invoice PDF support
-- Customer reviews
-- Trip reviews
-- Feedback management
-
-### 🚧 Phase 7 — Reports, Analytics & Final Polish
-Planned:
-
-- Revenue, expense and profit reports
-- Booking and trip analytics
-- Customer analytics
-- Dashboard improvements
-- Advanced filters
-- Performance improvements
-- Final UI/UX polish
-
-## 🔄 Application Workflow
-
-```
-Customer
-   ↓
-Enquiry
-   ↓
+```text
+Customer Enquiry
+       ↓
 Package
-   ↓
+       ↓
 Quotation
-   ↓
-Accepted Quotation
-   ↓
+       ↓
 Booking
-   ↓
-Confirmed Booking
-   ↓
+       ↓
 Trip
-   ↓
-Payments + Expenses
-   ↓
-Revenue + Balance + Profit
-   ↓
-Invoices + Reviews
-   ↓
-Reports & Analytics
+       ↓
+Payments & Expenses
+       ↓
+Trip Completion
+       ↓
+Invoice
+       ↓
+Customer Review
 ```
 
-## 💡 Why TripMate?
-TripMate aims to bring customer, travel, booking and financial workflows into one platform for small travel businesses that may otherwise rely on notebooks, spreadsheets or disconnected tools.
+The application is intentionally designed to remain **simple and practical** for local business owners rather than introducing unnecessary enterprise-level complexity.
 
-## 🛠️ Technology Stack
-**Frontend**
+---
 
-- React
-- JavaScript
-- HTML5
-- CSS3
-- Vite
-**Backend**
+# ✨ Features
 
-- Node.js
-- Express.js
-- REST API
-**Database**
+## 🔐 Authentication & Business Profile
 
-- MongoDB
-- Mongoose
-**Authentication**
+* User registration and login
+* JWT-based authentication
+* Protected routes
+* Business profile management
+* Business-specific data access
 
-- JWT
-- Password hashing
-**Development Tools**
+---
 
-- VS Code
-- Git
-- GitHub
-- GitHub Copilot
+## 👥 Customer Management
 
-## 🎨 Design System
-PurposeColorPrimary Deep Blue`#1565C0`Secondary Teal`#00A896`Accent Orange`#FF9800`Background`#F5F7FA`Card`#FFFFFF`Text`#172B4D`Success`#2E7D32`Warning`#F9A825`Error`#D32F2F`
+* Create customers
+* Update customer information
+* View customer details
+* Customer history
+* Search and manage customer records
 
-The same visual language is maintained across all phases.
+---
 
-## 🗂️ Project Structure
+## 📩 Enquiry Management
 
+Manage incoming customer enquiries and track them through the sales process.
+
+* Create enquiries
+* Update enquiry details
+* Track enquiry status
+* Connect enquiries with customers and packages
+
+---
+
+## 📦 Package Management
+
+Create and manage travel packages.
+
+* Package details
+* Pricing
+* Duration
+* Destinations
+* Package availability
+* Package information connected to quotations and bookings
+
+---
+
+## 📄 Quotation Management
+
+Create quotations for customer enquiries.
+
+* Generate quotations
+* Add package and trip information
+* Track quotation status
+* Accept or reject quotations
+* Convert accepted quotations into bookings
+
+---
+
+## 🚕 Booking Management
+
+Manage confirmed customer bookings.
+
+* Create bookings
+* Booking status management
+* Customer and package information
+* Travel dates
+* Passenger information
+* Booking amount
+* Booking history
+
+Trip creation is restricted to appropriate confirmed bookings to maintain workflow integrity.
+
+---
+
+## 🗺️ Trip Management
+
+Manage the actual travel operation.
+
+Trip statuses include:
+
+```text
+Scheduled
+Started
+Completed
+Cancelled
 ```
+
+Trip management includes:
+
+* Trip scheduling
+* Customer information
+* Destination
+* Vehicle details
+* Passenger information
+* Trip status
+* Trip completion
+
+---
+
+## 💰 Payments & Expenses
+
+Track the financial side of each booking and trip.
+
+### Payments
+
+* Record customer payments
+* Track paid amount
+* Track pending balance
+* Link payments with bookings/trips
+
+### Expenses
+
+* Record trip expenses
+* Categorize expenses
+* Track expense amounts
+* Associate expenses with trips
+
+### Profit Calculation
+
+TripMate calculates business performance using:
+
+```text
+Profit = Revenue - Expenses
+```
+
+The financial calculations also account for applicable payment/refund logic.
+
+---
+
+# 🧾 Invoice Management
+
+TripMate supports invoice generation as part of the completed-trip workflow.
+
+Features include:
+
+* Automatic invoice generation
+* Unique invoice numbering
+* Invoice date
+* Customer details
+* Business details
+* Trip information
+* Booking information
+* Payment information
+* Balance information
+* Invoice PDF generation
+* Public invoice access
+
+The invoice data is designed to preserve the relevant billing information at the time of invoice generation.
+
+---
+
+# 📱 WhatsApp Invoice Sharing
+
+TripMate provides a simple WhatsApp sharing workflow for invoices.
+
+The system can generate a WhatsApp message containing the public invoice link so the business owner can share it with the customer.
+
+This uses the user's WhatsApp workflow rather than pretending to provide an official WhatsApp Business API integration.
+
+---
+
+# ⭐ Customer Reviews
+
+Customers can provide feedback after a completed trip.
+
+Review functionality includes:
+
+* Rating from 1–5
+* Customer comment
+* Trip association
+* Prevention of duplicate reviews for the same trip
+
+---
+
+# 📅 Trip Calendar
+
+TripMate includes a simple calendar designed around the driver's daily workflow.
+
+The calendar:
+
+* Shows dates containing trips
+* Supports month navigation
+* Allows selecting a date
+* Displays trips scheduled for that date
+* Supports multiple trips on the same date
+* Provides quick access to trip details
+
+The calendar uses the **actual trip date**, making it useful for daily scheduling.
+
+---
+
+# 📊 Simple Business Summary
+
+TripMate avoids complicated business intelligence dashboards.
+
+Instead, it provides the information a small business owner actually needs:
+
+* Revenue
+* Expenses
+* Profit
+* Pending payments
+
+The summary supports useful periods such as:
+
+* This Month
+* Last Month
+* This Year
+* Custom Date Range
+
+All values are calculated from actual application data.
+
+---
+
+# 📋 Simple Reports
+
+TripMate provides compact reports focused on practical business information.
+
+### Trip Report
+
+Includes information such as:
+
+* Customer
+* Trip date
+* Destination
+* Status
+* Amount
+
+### Payment Report
+
+Includes:
+
+* Customer
+* Booking
+* Payment amount
+* Payment status
+* Date
+
+### Expense Report
+
+Includes:
+
+* Trip
+* Expense category
+* Amount
+* Date
+
+The reporting functionality is intentionally kept simple for the application's target users.
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+* React.js
+* Vite
+* JavaScript
+* CSS
+
+## Backend
+
+* Node.js
+* Express.js
+
+## Database
+
+* MongoDB
+* Mongoose
+
+## Authentication
+
+* JSON Web Tokens (JWT)
+
+## Other Technologies
+
+* REST APIs
+* PDF generation
+* WhatsApp sharing
+* Git & GitHub
+
+---
+
+# 🏗️ Project Architecture
+
+```text
 TripMate/
 │
 ├── client/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── layouts/
-│   │   ├── hooks/
 │   │   ├── services/
 │   │   ├── context/
-│   │   ├── utils/
-│   │   └── assets/
+│   │   └── ...
 │   └── package.json
 │
 ├── server/
-│   ├── config/
 │   ├── controllers/
-│   ├── middleware/
 │   ├── models/
 │   ├── routes/
+│   ├── middleware/
 │   ├── services/
 │   ├── utils/
 │   ├── tests/
 │   └── package.json
 │
-├── .gitignore
-└── README.md
+├── README.md
+└── ...
 ```
 
-## 🚀 Getting Started
+The exact structure may evolve as the project develops.
 
-### 1. Clone
+---
 
+# 🔄 Complete Business Workflow
+
+TripMate follows a structured business lifecycle:
+
+```text
+                 ┌──────────────┐
+                 │   Customer   │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │   Enquiry    │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │   Package    │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │  Quotation   │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │   Booking    │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │     Trip     │
+                 └──────┬───────┘
+                        ↓
+             ┌──────────┴──────────┐
+             ↓                     ↓
+        ┌──────────┐          ┌──────────┐
+        │ Payments │          │ Expenses │
+        └────┬─────┘          └────┬─────┘
+             └──────────┬──────────┘
+                        ↓
+                 ┌──────────────┐
+                 │   Complete   │
+                 │     Trip     │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │   Invoice    │
+                 └──────┬───────┘
+                        ↓
+                 ┌──────────────┐
+                 │    Review    │
+                 └──────────────┘
 ```
+
+---
+
+# ⚙️ Installation
+
+## Prerequisites
+
+Make sure the following are installed:
+
+* Node.js
+* npm
+* MongoDB or MongoDB Atlas
+* Git
+
+---
+
+## 1. Clone the Repository
+
+```bash
 git clone https://github.com/mathavan-web/TripMate.git
+
 cd TripMate
 ```
 
-### 2. Backend
+---
 
-```
+## 2. Install Backend Dependencies
+
+```bash
 cd server
 npm install
 ```
-Create `server/.env`:
-
-```
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-NODE_ENV=development
-```
-Start the backend:
-
-```
-npm run dev
-```
-
-### 3. Frontend
-Open another terminal:
-
-```
-cd client
-npm install
-npm run dev
-```
-Then open the local URL provided by Vite.
-
-## 🔐 Security
-TripMate uses:
-
-- JWT authentication
-- Password hashing
-- Protected API routes
-- Server-side ownership validation
-- Authenticated user identification
-- Request validation
-- Protected booking, trip, payment and expense data
-Ownership is enforced by the backend rather than trusted from frontend input.
-
-## 🧪 Development & Verification
-Completed phases are verified through backend tests, API checks, frontend production builds, authentication/ownership checks and runtime workflow verification.
-
-### Phase 5 verification
-
-```
-Backend tests: 9 passed / 0 failed
-Frontend build: Successful
-Existing + Phase 5 API routes: Successful
-```
-Financial verification:
-
-```
-Booking Revenue       ₹25,000
-Payments Received     ₹15,000
-Pending Balance       ₹10,000
-Total Expenses         ₹3,800
-Profit                ₹21,200
-```
-
-## 🗺️ Development Roadmap
-
-### ✅ Phase 1 — Foundation & Authentication
-Core architecture, authentication, profiles, security and dashboard foundation.
-
-### ✅ Phase 2 — Customer & Enquiry Management
-Customer records, enquiries, relationships, search and filtering.
-
-### ✅ Phase 3 — Package & Quotation Management
-Packages, pricing, quotations, quotation workflow and pricing snapshots.
-
-### ✅ Phase 4 — Booking & Trip Management
-Bookings, trip management, booking-to-trip workflow, driver/vehicle information and trip status.
-
-### ✅ Phase 5 — Expenses, Payments & Profit
-Payments, expenses, balances, revenue, trip expenses, profit calculation and financial dashboard metrics.
-
-### 🚧 Phase 6 — Invoices & Reviews
-Invoices, invoice generation/PDF support and customer reviews.
-
-### 🚧 Phase 7 — Reports, Analytics & Final Polish
-Reports, analytics, dashboard improvements, advanced filtering, performance and final UI/UX refinement.
-
-## 📈 Current Development Status
-**Completed:** Phases 1–5
-
-**Next:** Phase 6 — Invoices & Reviews
-
-**Upcoming:** Phase 7 — Reports, Analytics & Final Polish
-
-TripMate remains under active development and is not yet considered a final production release.
-
-## 🤝 Development Approach
-Each phase is:
-
-1. Planned
-2. Designed
-3. Implemented
-4. Tested
-5. Verified
-6. Documented
-7. Integrated with previous phases
-The goal is to keep TripMate maintainable while gradually expanding it into a complete travel-business management platform.
-
-## 📌 Future Vision
-
-```
-Customer Management
-       ↓
-Travel Operations
-       ↓
-Booking Management
-       ↓
-Trip Management
-       ↓
-Financial Management
-       ↓
-Invoices & Reviews
-       ↓
-Reports & Analytics
-```
-
-## 👨‍💻 Developer
-**Madhavan**
-
-BCA Student | Web Development & Data Analysis Enthusiast
-
-TripMate is being developed as an ongoing learning and portfolio project using the MERN stack.
-
-## 📄 License
-This project is currently under active development. Licensing can be finalized before the first public production release.
 
 ---
-⭐ Follow the development as TripMate progresses through its remaining phases.
 
-**TripMate — Building better tools for small travel businesses. 🚕💻**
+## 3. Configure Backend Environment Variables
+
+Create a `.env` file inside the `server` directory.
+
+Example:
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+Do not commit the `.env` file to GitHub.
+
+---
+
+## 4. Start the Backend
+
+```bash
+npm start
+```
+
+The backend will run on the configured port.
+
+---
+
+## 5. Install Frontend Dependencies
+
+Open another terminal:
+
+```bash
+cd client
+npm install
+```
+
+---
+
+## 6. Start the Frontend
+
+```bash
+npm run dev
+```
+
+Vite will provide the local development URL.
+
+---
+
+# 🔑 Environment Variables
+
+Typical backend environment variables include:
+
+| Variable      | Description                        |
+| ------------- | ---------------------------------- |
+| `PORT`        | Backend server port                |
+| `MONGODB_URI` | MongoDB connection string          |
+| `JWT_SECRET`  | Secret used for JWT authentication |
+
+Additional deployment variables may be required depending on the hosting environment.
+
+Never expose secret environment variables in frontend code.
+
+---
+
+# 🧪 Testing
+
+The backend includes automated regression tests.
+
+Run:
+
+```bash
+cd server
+node --test tests/*.test.js
+```
+
+The final Phase 7 regression verification achieved:
+
+```text
+23 tests passed
+0 tests failed
+```
+
+---
+
+# 🏭 Production Build
+
+To create a production build of the frontend:
+
+```bash
+cd client
+npm run build
+```
+
+The Phase 7 production build completed successfully.
+
+---
+
+# 🚀 Deployment
+
+TripMate is structured to support deployment using services such as:
+
+* MongoDB Atlas for the database
+* Render or similar platforms for backend hosting
+* Static hosting for the React frontend
+
+Before deployment, configure the required environment variables on the hosting platform.
+
+Do not upload local `.env` files containing credentials.
+
+---
+
+# 🔒 Security Considerations
+
+TripMate uses:
+
+* JWT authentication
+* Protected API routes
+* Business/user ownership checks
+* Environment variables for secrets
+* Backend validation
+* Database-level relationships
+
+Customer and business information should only be accessible to authorized users.
+
+---
+
+# 📱 Design Philosophy
+
+TripMate is intentionally designed around **simplicity**.
+
+The target users are:
+
+* Local taxi drivers
+* Jeep safari operators
+* Small tour operators
+* Vehicle owners
+* Small travel businesses
+
+Therefore, the application avoids unnecessary:
+
+* Complex analytics
+* Enterprise dashboards
+* Predictive systems
+* Complicated KPI systems
+* Large business intelligence features
+
+The goal is to make important information available quickly:
+
+> **Customers → Bookings → Trips → Money → Invoices**
+
+---
+
+# 🗺️ Development Phases
+
+TripMate was developed incrementally through seven phases.
+
+| Phase   | Description                                  | Status      |
+| ------- | -------------------------------------------- | ----------- |
+| Phase 1 | Foundation & Authentication                  | ✅ Completed |
+| Phase 2 | Customer & Enquiry Management                | ✅ Completed |
+| Phase 3 | Package & Quotation Management               | ✅ Completed |
+| Phase 4 | Booking & Trip Management                    | ✅ Completed |
+| Phase 5 | Expenses, Payments & Profit                  | ✅ Completed |
+| Phase 6 | Invoices & Reviews                           | ✅ Completed |
+| Phase 7 | Trip Calendar, Simple Reports & Final Polish | ✅ Completed |
+
+---
+
+# 🎯 Current Status
+
+**TripMate has completed all seven planned development phases.**
+
+The application currently provides a complete workflow for managing:
+
+```text
+Customers
+    ↓
+Enquiries
+    ↓
+Packages
+    ↓
+Quotations
+    ↓
+Bookings
+    ↓
+Trips
+    ↓
+Payments
+    ↓
+Expenses
+    ↓
+Invoices
+    ↓
+Reviews
+    ↓
+Calendar & Simple Reports
+```
+
+The project has also undergone backend regression testing and a production frontend build verification.
+
+---
+
+# 🔮 Future Possibilities
+
+Future development may include features such as:
+
+* Dedicated platform administration
+* Customer-facing services
+* Multi-business platform capabilities
+* Additional integrations
+* Advanced reporting if required by real users
+
+These features are intentionally outside the current TripMate scope.
+
+---
+
+# 👨‍💻 Developer
+
+**Mathavan**
+
+BCA Student
+Full-Stack Development & Data Analytics Enthusiast
+
+GitHub:
+https://github.com/mathavan-web
+
+---
+
+# 📄 License
+
+This project is developed as a personal/academic project.
+
+Add an appropriate open-source license here if you decide to make the project officially open source.

@@ -16,6 +16,10 @@ import BookingsPage from './pages/BookingsPage';
 import TripsPage from './pages/TripsPage';
 import PaymentsPage from './pages/PaymentsPage';
 import ExpensesPage from './pages/ExpensesPage';
+import InvoicesPage from './pages/InvoicesPage';
+import ReviewsPage from './pages/ReviewsPage';
+import ReviewSubmissionPage from './pages/ReviewSubmissionPage';
+import PublicInvoicePage from './pages/PublicInvoicePage';
 
 function ProtectedRoute({ children }) {
   return children;
@@ -27,6 +31,8 @@ function AppRoutes() {
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/login" element={<Navigate to="/dashboard" replace />} />
       <Route path="/register" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/invoice/:token" element={<PublicInvoicePage />} />
+      <Route path="/review/:token" element={<ReviewSubmissionPage />} />
 
       <Route
         element={
@@ -44,6 +50,8 @@ function AppRoutes() {
         <Route path="/trips" element={<TripsPage />} />
         <Route path="/payments" element={<PaymentsPage />} />
         <Route path="/expenses" element={<ExpensesPage />} />
+        <Route path="/invoices" element={<InvoicesPage />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/business-profile" element={<BusinessProfilePage />} />
         <Route path="/settings" element={<SettingsPage />} />
