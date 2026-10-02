@@ -361,7 +361,7 @@ function DashboardPage() {
         </div>
       </section>
 
-      <section className="card-block">
+      <section id="trip-calendar" className="card-block">
         <div className="calendar-header">
           <div>
             <p className="eyebrow">Trip calendar</p>
@@ -495,7 +495,7 @@ function DashboardPage() {
         )}
       </section>
 
-      <section className="card-block">
+      <section id="reports" className="card-block">
         <div className="section-heading">
           <h2>Simple reports</h2>
           <p>Practical summaries for trips, payments, and expenses in the selected period.</p>
